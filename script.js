@@ -78,7 +78,7 @@ function updateCounter() {
 
 // 5. Kirim Data Sekaligus
 window.sendData = async function () {
-  const webhookUrl = 'https://hook.us2.make.com/vo9unj2amudsib1zpsq9muueazb3sar4';
+  const webhookUrl = 'https://hook.us2.make.com/o5mo7wka21nuwnz6y1dsgi5cpp6s91w6';
 
   const summary = Object.entries(cart)
     .map(([id, qty]) => `${id}, ${qty}`)
