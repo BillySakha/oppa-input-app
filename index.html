@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Tian Shoes - Input Order</title>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <link rel="stylesheet" href="style.css" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="header-content">
+        <h1>Input Order</h1>
+        <span id="item-counter" class="badge">0 Item</span>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Cari sepatu atau sandal..." />
+      </div>
+    </header>
+
+    <main class="container">
+      <section id="category-sepatu">
+        <h2 class="category-title">Koleksi Sepatu</h2>
+        <div id="list-sepatu" class="product-grid"></div>
+      </section>
+
+      <section id="category-sandal">
+        <h2 class="category-title">Koleksi Sandal</h2>
+        <div id="list-sandal" class="product-grid"></div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <button id="btn-submit" class="btn-primary" disabled>Kirim ke Laporan</button>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
