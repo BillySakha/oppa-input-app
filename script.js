@@ -2,30 +2,31 @@
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-// BAGIAN JANGGAL 1: Pastikan ambil ID User secara eksplisit
+// Ambil ID User buat alamat kirim di Make.com
 const userId = tg.initDataUnsafe?.user?.id || '';
 
-// 2. Data Produk Tian
+// 2. Data Produk Tian (Sudah ditambah Image Proxy biar muncul di HP)
+const proxy = 'https://wsrv.nl/?url=';
 const products = [
-  { id: 'kasual_tassel', name: 'Sepatu Formal Kasual Kantoran Pria Kulit Sintetis (Tassel Glossy)', cat: 'sepatu', img: 'https://i.postimg.cc/nVDgKBmN/Screenshot-2026-03-26-11-05-36-350-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'kasual_polos', name: 'Sepatu Formal Kasual Kantoran Pria Kulit Sintetis (Polosan)', cat: 'sepatu', img: 'https://i.postimg.cc/tT0t9ZgB/Screenshot-2026-03-26-11-05-53-209-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'Lofers', name: 'Sepatu Formal Lofers Pria Kulit Sintetis', cat: 'sepatu', img: 'https://i.postimg.cc/fy89SJMF/Screenshot-2026-03-26-11-10-15-941-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'docmart_tinggi', name: 'Sepatu Ala Dockmart Hak Tinggi 4cm Kulit Sintetis', cat: 'sepatu', img: 'https://i.postimg.cc/fW8tKSh2/Screenshot-2026-03-26-11-11-15-289-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'kasual_wing_shiny', name: 'Sepatu Formal Kasual Pria Kulit Sintetis (Shiny Wingtip)', cat: 'sepatu', img: 'https://i.postimg.cc/9f1ChT1c/Screenshot-2026-03-26-11-12-18-443-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'penny_loaf', name: 'Sepatu Penny Loafers (Dokmart Pantovel)', cat: 'sepatu', img: 'https://i.postimg.cc/CxgRMGC0/Screenshot-2026-03-26-11-06-32-754-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'docmart_utip', name: 'Sepatu Docmart Pria Kasual Formal Kulit Sintetis (U-Tip)', cat: 'sepatu', img: 'https://i.postimg.cc/d1ksj3mM/Screenshot-2026-03-26-11-11-55-515-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'lofers_tassel', name: 'Sepatu Formal Loafers Pria Kulit Sintetis (Matte Tassel)', cat: 'sepatu', img: 'https://i.postimg.cc/BQs3XMzk/Screenshot-2026-03-26-11-10-49-838-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'doc_polos', name: 'Sepatu Docmart Pria Kasual Formal Kulit Sintetis (Polos)', cat: 'sepatu', img: 'https://i.postimg.cc/4dzMGTXx/Screenshot-2026-03-26-11-11-36-292-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'sdl_jepit_010', name: 'Sandal Pria Kulit Sapi Asli 010 (Jepit)', cat: 'sandal', img: 'https://i.postimg.cc/0ybBQS8R/Screenshot-2026-03-26-11-13-47-843-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'sdl_001_drk', name: 'Sandal Pria Kulit Sapi Asli 001 (Dark)', cat: 'sandal', img: 'https://i.postimg.cc/RFzsXbwx/Screenshot-2026-03-26-11-13-30-749-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'sdl_008_blk', name: 'Sandal Pria Kulit Sapi Asli 008 (Black)', cat: 'sandal', img: 'https://i.postimg.cc/15zWCFVZ/Screenshot-2026-03-26-11-12-54-445-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'sdl_008_tan', name: 'Sandal Pria Kulit Sapi Asli 008 (Tan)', cat: 'sandal', img: 'https://i.postimg.cc/k5Ww6Fzw/Screenshot-2026-03-26-11-12-36-054-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'sdl_gesper_004', name: 'Sandal Pria Kulit Sapi Asli 004 (Gesper)', cat: 'sandal', img: 'https://i.postimg.cc/RhZTYrFX/Screenshot-2026-03-26-11-13-12-855-com-ss-android-ugc-trill-edit.jpg' },
+  { id: 'kasual_tassel', name: 'Sepatu Formal Kasual Kantoran Pria Kulit Sintetis (Tassel Glossy)', cat: 'sepatu', img: proxy + 'https://i.postimg.cc/nVDgKBmN/Screenshot-2026-03-26-11-05-36-350-com-ss-android-ugc-trill-edit.jpg' },
+  { id: 'kasual_polos', name: 'Sepatu Formal Kasual Kantoran Pria Kulit Sintetis (Polosan)', cat: 'sepatu', img: proxy + 'https://i.postimg.cc/tT0t9ZgB/Screenshot-2026-03-26-11-05-53-209-com-ss-android-ugc-trill-edit.jpg' },
+  { id: 'Lofers', name: 'Sepatu Formal Lofers Pria Kulit Sintetis', cat: 'sepatu', img: proxy + 'https://i.postimg.cc/fy89SJMF/Screenshot-2026-03-26-11-10-15-941-com-ss-android-ugc-trill-edit.jpg' },
+  { id: 'docmart_tinggi', name: 'Sepatu Ala Dockmart Hak Tinggi 4cm Kulit Sintetis', cat: 'sepatu', img: proxy + 'https://i.postimg.cc/fW8tKSh2/Screenshot-2026-03-26-11-11-15-289-com-ss-android-ugc-trill-edit.jpg' },
+  { id: 'kasual_wing_shiny', name: 'Sepatu Formal Kasual Pria Kulit Sintetis (Shiny Wingtip)', cat: 'sepatu', img: proxy + 'https://i.postimg.cc/9f1ChT1c/Screenshot-2026-03-26-11-12-18-443-com-ss-android-ugc-trill-edit.jpg' },
+  { id: 'penny_loaf', name: 'Sepatu Penny Loafers (Dokmart Pantovel)', cat: 'sepatu', img: proxy + 'https://i.postimg.cc/CxgRMGC0/Screenshot-2026-03-26-11-06-32-754-com-ss-android-ugc-trill-edit.jpg' },
+  { id: 'docmart_utip', name: 'Sepatu Docmart Pria Kasual Formal Kulit Sintetis (U-Tip)', cat: 'sepatu', img: proxy + 'https://i.postimg.cc/d1ksj3mM/Screenshot-2026-03-26-11-11-55-515-com-ss-android-ugc-trill-edit.jpg' },
+  { id: 'lofers_tassel', name: 'Sepatu Formal Loafers Pria Kulit Sintetis (Matte Tassel)', cat: 'sepatu', img: proxy + 'https://i.postimg.cc/BQs3XMzk/Screenshot-2026-03-26-11-10-49-838-com-ss-android-ugc-trill-edit.jpg' },
+  { id: 'doc_polos', name: 'Sepatu Docmart Pria Kasual Formal Kulit Sintetis (Polos)', cat: 'sepatu', img: proxy + 'https://i.postimg.cc/4dzMGTXx/Screenshot-2026-03-26-11-11-36-292-com-ss-android-ugc-trill-edit.jpg' },
+  { id: 'sdl_jepit_010', name: 'Sandal Pria Kulit Sapi Asli 010 (Jepit)', cat: 'sandal', img: proxy + 'https://i.postimg.cc/0ybBQS8R/Screenshot-2026-03-26-11-13-47-843-com-ss-android-ugc-trill-edit.jpg' },
+  { id: 'sdl_001_drk', name: 'Sandal Pria Kulit Sapi Asli 001 (Dark)', cat: 'sandal', img: proxy + 'https://i.postimg.cc/RFzsXbwx/Screenshot-2026-03-26-11-13-30-749-com-ss-android-ugc-trill-edit.jpg' },
+  { id: 'sdl_008_blk', name: 'Sandal Pria Kulit Sapi Asli 008 (Black)', cat: 'sandal', img: proxy + 'https://i.postimg.cc/15zWCFVZ/Screenshot-2026-03-26-11-12-54-445-com-ss-android-ugc-trill-edit.jpg' },
+  { id: 'sdl_008_tan', name: 'Sandal Pria Kulit Sapi Asli 008 (Tan)', cat: 'sandal', img: proxy + 'https://i.postimg.cc/k5Ww6Fzw/Screenshot-2026-03-26-11-12-36-054-com-ss-android-ugc-trill-edit.jpg' },
+  { id: 'sdl_gesper_004', name: 'Sandal Pria Kulit Sapi Asli 004 (Gesper)', cat: 'sandal', img: proxy + 'https://i.postimg.cc/RhZTYrFX/Screenshot-2026-03-26-11-13-12-855-com-ss-android-ugc-trill-edit.jpg' },
 ];
 
 let cart = {};
 
-// 3. Render Produk
+// 3. Render Produk ke Layar
 function renderProducts() {
   const listSepatu = document.getElementById('list-sepatu');
   const listSandal = document.getElementById('list-sandal');
@@ -37,7 +38,7 @@ function renderProducts() {
     card.className = 'product-card';
     card.setAttribute('data-name', p.name.toLowerCase());
     card.innerHTML = `
-      <img src="${p.img}" class="product-img" onerror="this.src='https://via.placeholder.com/105?text=Shoe'">
+      <img src="${p.img}" class="product-img" onerror="this.src='https://via.placeholder.com/105?text=TianShoes'">
       <div class="product-info">
         <h3>${p.name}</h3>
         <p>${p.id}</p>
@@ -56,7 +57,7 @@ function renderProducts() {
   });
 }
 
-// 4. Update Qty
+// 4. Update Qty & Counter
 window.updateQty = function (id, delta) {
   if (!cart[id]) cart[id] = 0;
   cart[id] += delta;
@@ -75,11 +76,10 @@ function updateCounter() {
   if (btnSubmit) btnSubmit.disabled = total === 0;
 }
 
-// 5. Kirim Data (Gue rapihin biar kirim SEKALIGUS)
+// 5. Kirim Data Sekaligus
 window.sendData = async function () {
   const webhookUrl = 'https://hook.us2.make.com/vo9unj2amudsib1zpsq9muueazb3sar4';
 
-  // Gabungin semua barang jadi satu teks biar Make.com gak pusing
   const summary = Object.entries(cart)
     .map(([id, qty]) => `${id}, ${qty}`)
     .join('\n');
@@ -89,13 +89,12 @@ window.sendData = async function () {
   btnSubmit.disabled = true;
 
   try {
-    // BAGIAN JANGGAL 2: Pastiin chat_id ikut kekirim di body JSON
     await fetch(webhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        chat_id: userId, // ID pengirim
-        text: summary, // Daftar barang
+        chat_id: userId,
+        text: summary,
       }),
     });
 
@@ -116,7 +115,7 @@ window.sendData = async function () {
   }
 };
 
-// Fitur Search
+// 6. Fitur Search
 const searchInput = document.getElementById('search-input');
 if (searchInput) {
   searchInput.addEventListener('input', (e) => {
