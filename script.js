@@ -91,7 +91,7 @@ if (searchInput) {
 
 // 7. Kirim Data ke Make.com
 window.sendData = async function () {
-  const webhookUrl = 'URL_WEBHOOK_MAKE_LU_DI_SINI'; // GANTI PAKE URL WEBHOOK LU
+  const webhookUrl = 'https://hook.us2.make.com/vo9unj2amudsib1zpsq9muueazb3sar4'; // GANTI PAKE URL WEBHOOK LU
   const items = Object.entries(cart);
 
   const btnSubmit = document.getElementById('btn-submit');
