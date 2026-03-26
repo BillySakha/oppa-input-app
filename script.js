@@ -1,6 +1,9 @@
 // 1. Inisialisasi Telegram Web App
 const tg = window.Telegram.WebApp;
-tg.expand(); // Biar tampilan langsung full screen
+tg.expand();
+
+// BAGIAN JANGGAL 1: Pastikan ambil ID User secara eksplisit
+const userId = tg.initDataUnsafe?.user?.id || '';
 
 // 2. Data Produk Tian
 const products = [
@@ -22,11 +25,10 @@ const products = [
 
 let cart = {};
 
-// 3. Fungsi buat nampilin Produk ke layar
+// 3. Render Produk
 function renderProducts() {
   const listSepatu = document.getElementById('list-sepatu');
   const listSandal = document.getElementById('list-sandal');
-
   listSepatu.innerHTML = '';
   listSandal.innerHTML = '';
 
@@ -34,20 +36,18 @@ function renderProducts() {
     const card = document.createElement('div');
     card.className = 'product-card';
     card.setAttribute('data-name', p.name.toLowerCase());
-
     card.innerHTML = `
-            <img src="${p.img}" class="product-img" onerror="this.src='https://via.placeholder.com/70?text=Shoe'">
-            <div class="product-info">
-                <h3>${p.name}</h3>
-                <p>${p.id}</p>
-            </div>
-            <div class="stepper">
-                <button class="step-btn" onclick="updateQty('${p.id}', -1)">-</button>
-                <span class="qty-val" id="qty-${p.id}">0</span>
-                <button class="step-btn" onclick="updateQty('${p.id}', 1)">+</button>
-            </div>
-        `;
-
+      <img src="${p.img}" class="product-img" onerror="this.src='https://via.placeholder.com/105?text=Shoe'">
+      <div class="product-info">
+        <h3>${p.name}</h3>
+        <p>${p.id}</p>
+        <div class="stepper">
+          <button class="step-btn" onclick="updateQty('${p.id}', -1)">-</button>
+          <span class="qty-val" id="qty-${p.id}">0</span>
+          <button class="step-btn" onclick="updateQty('${p.id}', 1)">+</button>
+        </div>
+      </div>
+    `;
     if (p.cat === 'sepatu') {
       listSepatu.appendChild(card);
     } else {
@@ -56,7 +56,7 @@ function renderProducts() {
   });
 }
 
-// 4. Fungsi Update Jumlah (Qty)
+// 4. Update Qty
 window.updateQty = function (id, delta) {
   if (!cart[id]) cart[id] = 0;
   cart[id] += delta;
@@ -68,7 +68,6 @@ window.updateQty = function (id, delta) {
   updateCounter();
 };
 
-// 5. Update Counter Badge & Tombol
 function updateCounter() {
   const total = Object.values(cart).reduce((a, b) => a + b, 0);
   document.getElementById('item-counter').innerText = `${total} Item`;
@@ -76,44 +75,34 @@ function updateCounter() {
   if (btnSubmit) btnSubmit.disabled = total === 0;
 }
 
-// 6. Fitur Search
-const searchInput = document.getElementById('search-input');
-if (searchInput) {
-  searchInput.addEventListener('input', (e) => {
-    const val = e.target.value.toLowerCase();
-    const cards = document.querySelectorAll('.product-card');
-    cards.forEach((card) => {
-      const name = card.getAttribute('data-name');
-      card.style.display = name.includes(val) ? 'flex' : 'none';
-    });
-  });
-}
-
-// 7. Kirim Data ke Make.com
-// Bagian Janggal: Pengiriman Data
+// 5. Kirim Data (Gue rapihin biar kirim SEKALIGUS)
 window.sendData = async function () {
   const webhookUrl = 'https://hook.us2.make.com/vo9unj2amudsib1zpsq9muueazb3sar4';
-  const items = Object.entries(cart); // Ngambil list belanjaan
-  const btnSubmit = document.getElementById('btn-submit');
 
+  // Gabungin semua barang jadi satu teks biar Make.com gak pusing
+  const summary = Object.entries(cart)
+    .map(([id, qty]) => `${id}, ${qty}`)
+    .join('\n');
+
+  const btnSubmit = document.getElementById('btn-submit');
   btnSubmit.innerText = 'Mengirim...';
   btnSubmit.disabled = true;
 
   try {
-    for (const [id, qty] of items) {
-      await fetch(webhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        // PAKE BACKTICK (tombol di bawah Esc), bukan tanda kutip!
-        body: JSON.stringify({ text: `${id}, ${qty}` }),
-      });
-    }
+    // BAGIAN JANGGAL 2: Pastiin chat_id ikut kekirim di body JSON
+    await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: userId, // ID pengirim
+        text: summary, // Daftar barang
+      }),
+    });
 
-    // Notif Sukses Telegram
     tg.showPopup(
       {
         title: 'Berhasil!',
-        message: 'Data masuk ke Sheets Tian.',
+        message: 'Laporan jualan masuk ke Sheets Tian.',
         buttons: [{ type: 'ok' }],
       },
       () => {
@@ -127,6 +116,18 @@ window.sendData = async function () {
   }
 };
 
-// --- BAGIAN KERAMAT: INI YANG BIKIN JALAN! ---
-renderProducts(); // Panggil fungsi buat nampilin gambar
-tg.ready(); // Kasih tau Telegram aplikasinya siap
+// Fitur Search
+const searchInput = document.getElementById('search-input');
+if (searchInput) {
+  searchInput.addEventListener('input', (e) => {
+    const val = e.target.value.toLowerCase();
+    const cards = document.querySelectorAll('.product-card');
+    cards.forEach((card) => {
+      const name = card.getAttribute('data-name');
+      card.style.display = name.includes(val) ? 'flex' : 'none';
+    });
+  });
+}
+
+renderProducts();
+tg.ready();
