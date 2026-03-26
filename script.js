@@ -5,23 +5,23 @@ tg.expand();
 // Ambil ID User buat alamat kirim di Make.com
 const userId = tg.initDataUnsafe?.user?.id || '';
 
-// 2. Data Produk Tian (Sudah ditambah Image Proxy biar muncul di HP)
-const proxy = 'https://wsrv.nl/?url=';
+// 2. Data Produk Tian (Versi Folder Lokal img/)
+// Proxy dihapus karena gambar sudah satu rumah di GitHub
 const products = [
-  { id: 'kasual_tassel', name: 'Sepatu Formal Kasual Kantoran Pria Kulit Sintetis (Tassel Glossy)', cat: 'sepatu', img: proxy + 'https://i.postimg.cc/nVDgKBmN/Screenshot-2026-03-26-11-05-36-350-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'kasual_polos', name: 'Sepatu Formal Kasual Kantoran Pria Kulit Sintetis (Polosan)', cat: 'sepatu', img: proxy + 'https://i.postimg.cc/tT0t9ZgB/Screenshot-2026-03-26-11-05-53-209-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'Lofers', name: 'Sepatu Formal Lofers Pria Kulit Sintetis', cat: 'sepatu', img: proxy + 'https://i.postimg.cc/fy89SJMF/Screenshot-2026-03-26-11-10-15-941-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'docmart_tinggi', name: 'Sepatu Ala Dockmart Hak Tinggi 4cm Kulit Sintetis', cat: 'sepatu', img: proxy + 'https://i.postimg.cc/fW8tKSh2/Screenshot-2026-03-26-11-11-15-289-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'kasual_wing_shiny', name: 'Sepatu Formal Kasual Pria Kulit Sintetis (Shiny Wingtip)', cat: 'sepatu', img: proxy + 'https://i.postimg.cc/9f1ChT1c/Screenshot-2026-03-26-11-12-18-443-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'penny_loaf', name: 'Sepatu Penny Loafers (Dokmart Pantovel)', cat: 'sepatu', img: proxy + 'https://i.postimg.cc/CxgRMGC0/Screenshot-2026-03-26-11-06-32-754-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'docmart_utip', name: 'Sepatu Docmart Pria Kasual Formal Kulit Sintetis (U-Tip)', cat: 'sepatu', img: proxy + 'https://i.postimg.cc/d1ksj3mM/Screenshot-2026-03-26-11-11-55-515-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'lofers_tassel', name: 'Sepatu Formal Loafers Pria Kulit Sintetis (Matte Tassel)', cat: 'sepatu', img: proxy + 'https://i.postimg.cc/BQs3XMzk/Screenshot-2026-03-26-11-10-49-838-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'doc_polos', name: 'Sepatu Docmart Pria Kasual Formal Kulit Sintetis (Polos)', cat: 'sepatu', img: proxy + 'https://i.postimg.cc/4dzMGTXx/Screenshot-2026-03-26-11-11-36-292-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'sdl_jepit_010', name: 'Sandal Pria Kulit Sapi Asli 010 (Jepit)', cat: 'sandal', img: proxy + 'https://i.postimg.cc/0ybBQS8R/Screenshot-2026-03-26-11-13-47-843-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'sdl_001_drk', name: 'Sandal Pria Kulit Sapi Asli 001 (Dark)', cat: 'sandal', img: proxy + 'https://i.postimg.cc/RFzsXbwx/Screenshot-2026-03-26-11-13-30-749-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'sdl_008_blk', name: 'Sandal Pria Kulit Sapi Asli 008 (Black)', cat: 'sandal', img: proxy + 'https://i.postimg.cc/15zWCFVZ/Screenshot-2026-03-26-11-12-54-445-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'sdl_008_tan', name: 'Sandal Pria Kulit Sapi Asli 008 (Tan)', cat: 'sandal', img: proxy + 'https://i.postimg.cc/k5Ww6Fzw/Screenshot-2026-03-26-11-12-36-054-com-ss-android-ugc-trill-edit.jpg' },
-  { id: 'sdl_gesper_004', name: 'Sandal Pria Kulit Sapi Asli 004 (Gesper)', cat: 'sandal', img: proxy + 'https://i.postimg.cc/RhZTYrFX/Screenshot-2026-03-26-11-13-12-855-com-ss-android-ugc-trill-edit.jpg' },
+  { id: 'kasual_tassel', name: 'Sepatu Formal Kasual (Tassel Glossy)', cat: 'sepatu', img: 'img/kasual_tassel.jpg' },
+  { id: 'kasual_polos', name: 'Sepatu Formal Kasual (Polosan)', cat: 'sepatu', img: 'img/kasual_polos.jpg' },
+  { id: 'Lofers', name: 'Sepatu Formal Lofers Pria', cat: 'sepatu', img: 'img/loafers_polos.jpg' },
+  { id: 'docmart_tinggi', name: 'Sepatu Docmart Hak Tinggi 4cm', cat: 'sepatu', img: 'img/docmart_tinggi.jpg' },
+  { id: 'kasual_wing_shiny', name: 'Sepatu Formal Shiny Wingtip', cat: 'sepatu', img: 'img/kasual_wingtip.jpg' },
+  { id: 'penny_loaf', name: 'Sepatu Penny Loafers Dokmart', cat: 'sepatu', img: 'img/penny_loafers.jpg' },
+  { id: 'docmart_utip', name: 'Sepatu Docmart U-Tip Kasual', cat: 'sepatu', img: 'img/docmart_utip.jpg' },
+  { id: 'lofers_tassel', name: 'Sepatu Loafers Matte Tassel', cat: 'sepatu', img: 'img/loafers_tassel.jpg' },
+  { id: 'doc_polos', name: 'Sepatu Docmart Polos Kasual', cat: 'sepatu', img: 'img/docmart_polos.jpg' },
+  { id: 'sdl_jepit_010', name: 'Sandal Jepit Kulit Sapi 010', cat: 'sandal', img: 'img/sandal_jepit_010.jpg' },
+  { id: 'sdl_001_drk', name: 'Sandal Kulit Sapi 001 Dark', cat: 'sandal', img: 'img/sandal_001_dark.jpg' },
+  { id: 'sdl_008_blk', name: 'Sandal Kulit Sapi 008 Black', cat: 'sandal', img: 'img/sandal_008_black.jpg' },
+  { id: 'sdl_008_tan', name: 'Sandal Kulit Sapi 008 Tan', cat: 'sandal', img: 'img/sandal_008_tan.jpg' },
+  { id: 'sdl_gesper_004', name: 'Sandal Gesper Kulit Sapi 004', cat: 'sandal', img: 'img/sandal_gesper_004.jpg' },
 ];
 
 let cart = {};
