@@ -90,11 +90,12 @@ if (searchInput) {
 }
 
 // 7. Kirim Data ke Make.com
+// Bagian Janggal: Pengiriman Data
 window.sendData = async function () {
-  const webhookUrl = 'https://hook.us2.make.com/vo9unj2amudsib1zpsq9muueazb3sar4'; // GANTI PAKE URL WEBHOOK LU
-  const items = Object.entries(cart);
-
+  const webhookUrl = 'https://hook.us2.make.com/vo9unj2amudsib1zpsq9muueazb3sar4';
+  const items = Object.entries(cart); // Ngambil list belanjaan
   const btnSubmit = document.getElementById('btn-submit');
+
   btnSubmit.innerText = 'Mengirim...';
   btnSubmit.disabled = true;
 
@@ -103,13 +104,16 @@ window.sendData = async function () {
       await fetch(webhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        // PAKE BACKTICK (tombol di bawah Esc), bukan tanda kutip!
         body: JSON.stringify({ text: `${id}, ${qty}` }),
       });
     }
+
+    // Notif Sukses Telegram
     tg.showPopup(
       {
         title: 'Berhasil!',
-        message: 'Data jualan masuk ke Sheets Tian.',
+        message: 'Data masuk ke Sheets Tian.',
         buttons: [{ type: 'ok' }],
       },
       () => {
@@ -117,7 +121,7 @@ window.sendData = async function () {
       },
     );
   } catch (error) {
-    alert('Gagal kirim data!');
+    alert('Gagal kirim! Cek koneksi.');
     btnSubmit.innerText = 'Kirim ke Laporan';
     btnSubmit.disabled = false;
   }
