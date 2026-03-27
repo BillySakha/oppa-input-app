@@ -48,9 +48,9 @@ function renderProducts() {
     const sizesHtml = Object.keys(p.sizePrices)
       .map(
         (size) => `
-      <button class="size-btn ${p.selectedSize === size ? 'active' : ''}" 
-              onclick="selectVariant('${p.id}', 'size', '${size}')">${size}</button>
-    `,
+  <button class="size-btn ${String(p.selectedSize) === String(size) ? 'active' : ''}" 
+          onclick="selectVariant('${p.id}', 'size', '${size}')">${size}</button>
+`,
       )
       .join('');
 
@@ -157,17 +157,19 @@ window.kirimLaporan = () => {
   const tg = window.Telegram.WebApp;
   const userChatId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : '7610888727';
 
+  // Pastiin cuma ngirim barang yang jumlahnya > 0
   const itemsToSubmit = products
     .filter((p) => p.quantity > 0)
     .map((p) => {
-      // Ambil harga sesuai ukuran yang dipilih saat itu
+      // Ambil harga sesuai ukuran yang dipilih
       const fixedPrice = p.sizePrices[p.selectedSize];
 
       return {
-        // INI KUNCINYA: Kirim ID-nya (kasual_tassel) buat dicari Modul 4
-        nama_produk: p.id,
+        // INI YANG DI CARI MODUL 4: Harus ID (contoh: kasual_tassel)
+        // .trim() buat ilangin spasi gak sengaja, .toLowerCase() biar aman
+        nama_produk: p.id.trim().toLowerCase(),
 
-        // Kirim info lainnya buat pelengkap
+        // Info tambahan buat di Google Sheets
         nama_asli: p.name,
         ukuran: p.selectedSize,
         warna: p.selectedColor,
@@ -202,10 +204,11 @@ window.kirimLaporan = () => {
     .then((res) => {
       if (res.ok) {
         alert('Laporan Berhasil Terkirim!');
+        // Reset qty jadi 0 lagi
         products.forEach((p) => (p.quantity = 0));
         renderProducts();
       } else {
-        alert('Gagal kirim ke server!');
+        alert('Gagal kirim ke server! Cek koneksi.');
       }
     })
     .catch((err) => {
@@ -218,4 +221,6 @@ window.kirimLaporan = () => {
     });
 };
 
-window.onload = renderProducts;
+window.onload = () => {
+  renderProducts();
+};
