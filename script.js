@@ -1,4 +1,3 @@
-// 1. DAFTAR PRODUK (Sesuaikan dengan data sepatu Tian)
 let products = [
   { id: 1, name: 'kasual_tassel', price: 350000, image: 'img/kasual_tassel.jpg', quantity: 0 },
   { id: 2, name: 'kasual_polos', price: 320000, image: 'img/kasual_polos.jpg', quantity: 0 },
@@ -13,27 +12,31 @@ let products = [
 
 let isReturMode = false;
 
-// 2. FUNGSI RENDER (Tampilan Produk)
 function renderProducts() {
   const container = document.getElementById('product-list');
+  if (!container) return; // Mencegah error kalau ID tidak ketemu
+
   container.innerHTML = '';
   products.forEach((p) => {
     container.innerHTML += `
-            <div class="product-card">
-                <img src="${p.image}" alt="${p.name}">
-                <h3>${p.name.replace(/_/g, ' ')}</h3>
-                <p>Rp ${p.price.toLocaleString()}</p>
-                <div class="qty-control">
-                    <button onclick="updateQty(${p.id}, -1)">-</button>
-                    <span>${p.quantity}</span>
-                    <button onclick="updateQty(${p.id}, 1)">+</button>
-                </div>
-            </div>
-        `;
+      <div class="product-card">
+        <img src="${p.image}" alt="${p.name}">
+        <h3>${p.name.replace(/_/g, ' ')}</h3>
+        <p>Rp ${p.price.toLocaleString()}</p>
+        <div class="qty-control">
+          <button onclick="updateQty(${p.id}, -1)">-</button>
+          <span>${p.quantity}</span>
+          <button onclick="updateQty(${p.id}, 1)">+</button>
+        </div>
+      </div>
+    `;
   });
+
+  // Update Badge Jumlah Item di Header
+  const totalItems = products.reduce((acc, curr) => acc + curr.quantity, 0);
+  document.getElementById('item-counter').innerText = `${totalItems} Item`;
 }
 
-// 3. UPDATE JUMLAH
 function updateQty(id, change) {
   const product = products.find((p) => p.id === id);
   if (product) {
@@ -42,22 +45,19 @@ function updateQty(id, change) {
   }
 }
 
-// 4. SWITCH MODE (JUALAN / RETUR)
 function toggleMode() {
   isReturMode = !isReturMode;
   const btn = document.getElementById('modeBtn');
   if (isReturMode) {
     btn.innerText = 'MODE: RETUR';
-    btn.classList.add('btn-retur'); // Pastikan ada CSS .btn-retur warna merah
+    btn.style.backgroundColor = '#ff4444'; // Merah pas retur
   } else {
     btn.innerText = 'MODE: JUALAN';
-    btn.classList.remove('btn-retur');
+    btn.style.backgroundColor = '#2ecc71'; // Hijau pas jualan
   }
 }
 
-// 5. KIRIM LAPORAN (LOGIKA FIX 3 BARANG MASUK 1)
 function kirimLaporan() {
-  // Filter hanya barang yang ada jumlahnya
   const pesanan = products
     .filter((p) => p.quantity > 0)
     .map((p) => {
@@ -75,28 +75,27 @@ function kirimLaporan() {
     return;
   }
 
-  // Ganti URL ini dengan Webhook Make.com lu yang aktif
-  const webhookUrl = 'URL_WEBHOOK_LU_DI_SINI';
+  // ISI URL WEBHOOK MAKE LU DI SINI
+  const webhookUrl = 'https://hook.us2.make.com/o5mo7wka21nuwnz6y1dsgi5cpp6s91w6';
 
   fetch(webhookUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       user: 'Tian',
-      items: pesanan, // Data dikirim sebagai DAFTAR (Array)
+      items: pesanan,
     }),
   })
     .then((response) => {
       if (response.ok) {
         alert('Laporan Berhasil Terkirim!');
-        // Reset keranjang setelah sukses
         products.forEach((p) => (p.quantity = 0));
         renderProducts();
       }
     })
     .catch((error) => {
       console.error('Error:', error);
-      alert('Gagal kirim, cek koneksi internet!');
+      alert('Gagal kirim, cek koneksi!');
     });
 }
 
