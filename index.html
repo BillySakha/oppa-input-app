@@ -3,39 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="referrer" content="no-referrer" />
-    <title>Tian Shoes - Input Order</title>
+    <title>Tian Shoes - Management System</title>
+
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link rel="stylesheet" href="style.css?v=999" />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="style.css?v=1" />
   </head>
   <body>
     <header class="app-header">
-      <div class="header-content">
-        <h1>Input Order</h1>
+      <div class="header-top">
+        <h1>Tian Shoes</h1>
         <span id="item-counter" class="badge">0 Item</span>
       </div>
 
-      <div style="padding: 10px; text-align: center">
-        <button id="modeBtn" onclick="toggleMode()" class="btn-mode">MODE: JUALAN</button>
+      <div class="mode-container">
+        <button id="modeBtn" class="btn-mode mode-jualan" onclick="toggleMode()">MODE: JUALAN</button>
       </div>
 
-      <div class="search-bar">
-        <input type="text" id="search-input" placeholder="Cari sepatu..." />
+      <div class="search-box">
+        <input type="text" id="search-input" placeholder="Cari model sepatu..." oninput="handleSearch()" />
       </div>
     </header>
 
     <main class="container">
-      <section id="category-sepatu">
-        <h2 class="category-title">Koleksi Produk</h2>
-        <div id="product-list" class="product-grid"></div>
-      </section>
+      <div id="product-list" class="list-container"></div>
     </main>
 
     <footer class="app-footer">
-      <button id="btn-submit" class="btn-primary" onclick="kirimLaporan()">Kirim ke Laporan</button>
+      <button id="btn-submit" class="btn-primary" onclick="kirimLaporan()">Kirim Laporan</button>
     </footer>
 
-    <script src="script.js?v=999"></script>
+    <script src="script.js?v=1"></script>
   </body>
 </html>
