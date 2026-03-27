@@ -3,100 +3,148 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box !important;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
   background-color: #f2f2f7;
   padding-bottom: 120px;
 }
 
-/* --- GRID SYSTEM --- */
-#product-list.product-grid {
-  display: grid !important;
-  grid-template-columns: 1fr 1fr !important; /* WAJIB 2 KOLOM */
-  gap: 10px !important;
-  padding: 10px !important;
-  width: 100% !important;
-}
-
-/* --- CARD --- */
-.product-card {
-  background: white !important;
-  border-radius: 15px !important;
-  padding: 10px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
-  overflow: hidden !important; /* Biar gambar gak luber */
-}
-
-/* --- KUNCI MATI GAMBAR (FORCE SIZE) --- */
-.product-card img {
-  width: 100% !important;
-  max-width: 100% !important;
-  height: 120px !important; /* KUNCI TINGGI */
-  min-height: 120px !important;
-  object-fit: cover !important; /* BIAR GAK GEPENG */
-  border-radius: 10px !important;
-  display: block !important;
-  margin-bottom: 8px !important;
-}
-
-/* --- TEKS & TOMBOL --- */
-.product-card h3 {
-  font-size: 13px !important;
-  height: 32px !important;
-  overflow: hidden !important;
-  margin-bottom: 5px !important;
-}
-
-.product-card p {
-  color: #007aff !important;
-  font-weight: 800 !important;
-  font-size: 14px !important;
-  margin-bottom: 10px !important;
-}
-
-.qty-control {
-  display: flex !important;
-  gap: 10px !important;
-  align-items: center !important;
-}
-
-.qty-control button {
-  width: 30px !important;
-  height: 30px !important;
-  border: none !important;
-  background: #eee !important;
-  border-radius: 5px !important;
-}
-
-/* --- HEADER & FOOTER TETAP RAPI --- */
+/* --- HEADER --- */
 .app-header {
   background: white;
   padding: 15px;
   position: sticky;
   top: 0;
   z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.badge {
+  background: #007aff;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
 .btn-mode {
   width: 100%;
   padding: 10px;
-  background: #2ecc71;
-  color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
+  background: #34c759;
+  color: white;
+  font-weight: 700;
   margin-bottom: 10px;
 }
+
+.search-bar input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  background: #f1f1f4;
+}
+
+/* --- CONTAINER (LIST VIEW) --- */
+.container {
+  padding: 15px;
+}
+
+/* KUNCI: Paksa jadi List ke bawah, bukan Grid kotak-kotak */
+#product-list.product-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+
+/* --- KARTU PRODUK (HORIZONTAL SEPERTI FOTO WA) --- */
+.product-card {
+  background: white !important;
+  border-radius: 18px !important;
+  padding: 12px !important;
+  display: flex !important; /* Biar konten sejajar ke samping */
+  flex-direction: row !important; /* Image kiri, Teks kanan */
+  align-items: center !important;
+  gap: 15px !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* --- KUNCI MATI UKURAN GAMBAR --- */
+.product-card img {
+  width: 90px !important; /* Lebar kecil seperti di foto WA */
+  height: 90px !important; /* Tinggi sama biar kotak */
+  min-width: 90px !important;
+  object-fit: contain !important; /* Biar gambar gak kepotong/zoom */
+  border-radius: 12px !important;
+  background: #f8f8f8 !important;
+  flex-shrink: 0 !important; /* Gambar gak boleh kegencet */
+}
+
+/* --- INFO PRODUK --- */
+.product-card h3 {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #1c1c1e !important;
+  margin-bottom: 4px !important;
+  text-align: left !important;
+}
+
+.product-card p {
+  color: #007aff !important;
+  font-weight: 800 !important;
+  font-size: 14px !important;
+  margin-bottom: 8px !important;
+  text-align: left !important;
+}
+
+/* --- CONTROLS --- */
+.qty-control {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  background: #f2f2f7 !important;
+  padding: 4px !important;
+  border-radius: 8px !important;
+  width: fit-content !important;
+}
+
+.qty-control button {
+  width: 28px !important;
+  height: 28px !important;
+  border: none !important;
+  background: white !important;
+  border-radius: 6px !important;
+  font-weight: bold !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.qty-control span {
+  font-weight: 700 !important;
+  min-width: 20px !important;
+  text-align: center !important;
+}
+
+/* --- FOOTER --- */
 .app-footer {
   position: fixed;
   bottom: 0;
   width: 100%;
-  padding: 20px;
+  padding: 15px;
   background: white;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
 }
+
 .btn-primary {
   width: 100%;
   padding: 15px;
@@ -105,4 +153,5 @@ body {
   border: none;
   border-radius: 12px;
   font-weight: bold;
+  font-size: 16px;
 }
