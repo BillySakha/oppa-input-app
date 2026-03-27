@@ -1,132 +1,104 @@
-// 1. Inisialisasi Telegram Web App
-const tg = window.Telegram.WebApp;
-tg.expand();
-
-// Ambil ID User buat alamat kirim di Make.com
-const userId = tg.initDataUnsafe?.user?.id || '';
-
-// 2. Data Produk Tian (Versi Folder Lokal img/)
-// Proxy dihapus karena gambar sudah satu rumah di GitHub
-const products = [
-  { id: 'kasual_tassel', name: 'Sepatu Formal Kasual (Tassel Glossy)', cat: 'sepatu', img: 'img/kasual_tassel.jpg' },
-  { id: 'kasual_polos', name: 'Sepatu Formal Kasual (Polosan)', cat: 'sepatu', img: 'img/kasual_polos.jpg' },
-  { id: 'Lofers', name: 'Sepatu Formal Lofers Pria', cat: 'sepatu', img: 'img/loafers_polos.jpg' },
-  { id: 'docmart_tinggi', name: 'Sepatu Docmart Hak Tinggi 4cm', cat: 'sepatu', img: 'img/docmart_tinggi.jpg' },
-  { id: 'kasual_wing_shiny', name: 'Sepatu Formal Shiny Wingtip', cat: 'sepatu', img: 'img/kasual_wingtip.jpg' },
-  { id: 'penny_loaf', name: 'Sepatu Penny Loafers Dokmart', cat: 'sepatu', img: 'img/penny_loafers.jpg' },
-  { id: 'docmart_utip', name: 'Sepatu Docmart U-Tip Kasual', cat: 'sepatu', img: 'img/docmart_utip.jpg' },
-  { id: 'lofers_tassel', name: 'Sepatu Loafers Matte Tassel', cat: 'sepatu', img: 'img/loafers_tassel.jpg' },
-  { id: 'doc_polos', name: 'Sepatu Docmart Polos Kasual', cat: 'sepatu', img: 'img/docmart_polos.jpg' },
-  { id: 'sdl_jepit_010', name: 'Sandal Jepit Kulit Sapi 010', cat: 'sandal', img: 'img/sandal_jepit_010.jpg' },
-  { id: 'sdl_001_drk', name: 'Sandal Kulit Sapi 001 Dark', cat: 'sandal', img: 'img/sandal_001_dark.jpg' },
-  { id: 'sdl_008_blk', name: 'Sandal Kulit Sapi 008 Black', cat: 'sandal', img: 'img/sandal_008_black.jpg' },
-  { id: 'sdl_008_tan', name: 'Sandal Kulit Sapi 008 Tan', cat: 'sandal', img: 'img/sandal_008_tan.jpg' },
-  { id: 'sdl_gesper_004', name: 'Sandal Gesper Kulit Sapi 004', cat: 'sandal', img: 'img/sandal_gesper_004.jpg' },
+// 1. DAFTAR PRODUK (Sesuaikan dengan data sepatu Tian)
+let products = [
+  { id: 1, name: 'kasual_tassel', price: 350000, image: 'img/kasual_tassel.jpg', quantity: 0 },
+  { id: 2, name: 'kasual_polos', price: 320000, image: 'img/kasual_polos.jpg', quantity: 0 },
+  { id: 3, name: 'Lofers', price: 380000, image: 'img/lofers.jpg', quantity: 0 },
+  { id: 4, name: 'docmart_tinggi', price: 450000, image: 'img/docmart_tinggi.jpg', quantity: 0 },
+  { id: 5, name: 'kasual_wing_shiny', price: 370000, image: 'img/kasual_wing_shiny.jpg', quantity: 0 },
+  { id: 6, name: 'penny_loaf', price: 360000, image: 'img/penny_loaf.jpg', quantity: 0 },
+  { id: 7, name: 'docmart_utip', price: 430000, image: 'img/docmart_utip.jpg', quantity: 0 },
+  { id: 8, name: 'lofers_tassel', price: 390000, image: 'img/lofers_tassel.jpg', quantity: 0 },
+  { id: 9, name: 'docmart_polos', price: 410000, image: 'img/docmart_polos.jpg', quantity: 0 },
 ];
 
-let cart = {};
+let isReturMode = false;
 
-// 3. Render Produk ke Layar
+// 2. FUNGSI RENDER (Tampilan Produk)
 function renderProducts() {
-  const listSepatu = document.getElementById('list-sepatu');
-  const listSandal = document.getElementById('list-sandal');
-  listSepatu.innerHTML = '';
-  listSandal.innerHTML = '';
-
+  const container = document.getElementById('product-list');
+  container.innerHTML = '';
   products.forEach((p) => {
-    const card = document.createElement('div');
-    card.className = 'product-card';
-    card.setAttribute('data-name', p.name.toLowerCase());
-    card.innerHTML = `
-      <img src="${p.img}" class="product-img" onerror="this.src='https://via.placeholder.com/105?text=TianShoes'">
-      <div class="product-info">
-        <h3>${p.name}</h3>
-        <p>${p.id}</p>
-        <div class="stepper">
-          <button class="step-btn" onclick="updateQty('${p.id}', -1)">-</button>
-          <span class="qty-val" id="qty-${p.id}">0</span>
-          <button class="step-btn" onclick="updateQty('${p.id}', 1)">+</button>
-        </div>
-      </div>
-    `;
-    if (p.cat === 'sepatu') {
-      listSepatu.appendChild(card);
-    } else {
-      listSandal.appendChild(card);
-    }
+    container.innerHTML += `
+            <div class="product-card">
+                <img src="${p.image}" alt="${p.name}">
+                <h3>${p.name.replace(/_/g, ' ')}</h3>
+                <p>Rp ${p.price.toLocaleString()}</p>
+                <div class="qty-control">
+                    <button onclick="updateQty(${p.id}, -1)">-</button>
+                    <span>${p.quantity}</span>
+                    <button onclick="updateQty(${p.id}, 1)">+</button>
+                </div>
+            </div>
+        `;
   });
 }
 
-// 4. Update Qty & Counter
-window.updateQty = function (id, delta) {
-  if (!cart[id]) cart[id] = 0;
-  cart[id] += delta;
-  if (cart[id] <= 0) {
-    cart[id] = 0;
-    delete cart[id];
+// 3. UPDATE JUMLAH
+function updateQty(id, change) {
+  const product = products.find((p) => p.id === id);
+  if (product) {
+    product.quantity = Math.max(0, product.quantity + change);
+    renderProducts();
   }
-  document.getElementById(`qty-${id}`).innerText = cart[id] || 0;
-  updateCounter();
-};
-
-function updateCounter() {
-  const total = Object.values(cart).reduce((a, b) => a + b, 0);
-  document.getElementById('item-counter').innerText = `${total} Item`;
-  const btnSubmit = document.getElementById('btn-submit');
-  if (btnSubmit) btnSubmit.disabled = total === 0;
 }
 
-// 5. Kirim Data Sekaligus
-window.sendData = async function () {
-  const webhookUrl = 'https://hook.us2.make.com/o5mo7wka21nuwnz6y1dsgi5cpp6s91w6';
-
-  const summary = Object.entries(cart)
-    .map(([id, qty]) => `${id}, ${qty}`)
-    .join('\n');
-
-  const btnSubmit = document.getElementById('btn-submit');
-  btnSubmit.innerText = 'Mengirim...';
-  btnSubmit.disabled = true;
-
-  try {
-    await fetch(webhookUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: userId,
-        text: summary,
-      }),
-    });
-
-    tg.showPopup(
-      {
-        title: 'Berhasil!',
-        message: 'Laporan jualan masuk ke Sheets Tian.',
-        buttons: [{ type: 'ok' }],
-      },
-      () => {
-        tg.close();
-      },
-    );
-  } catch (error) {
-    alert('Gagal kirim! Cek koneksi.');
-    btnSubmit.innerText = 'Kirim ke Laporan';
-    btnSubmit.disabled = false;
+// 4. SWITCH MODE (JUALAN / RETUR)
+function toggleMode() {
+  isReturMode = !isReturMode;
+  const btn = document.getElementById('modeBtn');
+  if (isReturMode) {
+    btn.innerText = 'MODE: RETUR';
+    btn.classList.add('btn-retur'); // Pastikan ada CSS .btn-retur warna merah
+  } else {
+    btn.innerText = 'MODE: JUALAN';
+    btn.classList.remove('btn-retur');
   }
-};
-
-// 6. Fitur Search
-const searchInput = document.getElementById('search-input');
-if (searchInput) {
-  searchInput.addEventListener('input', (e) => {
-    const val = e.target.value.toLowerCase();
-    const cards = document.querySelectorAll('.product-card');
-    cards.forEach((card) => {
-      const name = card.getAttribute('data-name');
-      card.style.display = name.includes(val) ? 'flex' : 'none';
-    });
-  });
 }
 
+// 5. KIRIM LAPORAN (LOGIKA FIX 3 BARANG MASUK 1)
+function kirimLaporan() {
+  // Filter hanya barang yang ada jumlahnya
+  const pesanan = products
+    .filter((p) => p.quantity > 0)
+    .map((p) => {
+      return {
+        nama_produk: p.name,
+        jumlah: isReturMode ? p.quantity * -1 : p.quantity,
+        harga: p.price,
+        total: isReturMode ? p.quantity * p.price * -1 : p.quantity * p.price,
+        status: isReturMode ? 'RETUR' : 'Sukses',
+      };
+    });
+
+  if (pesanan.length === 0) {
+    alert('Pilih barang dulu, Bill!');
+    return;
+  }
+
+  // Ganti URL ini dengan Webhook Make.com lu yang aktif
+  const webhookUrl = 'URL_WEBHOOK_LU_DI_SINI';
+
+  fetch(webhookUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      user: 'Tian',
+      items: pesanan, // Data dikirim sebagai DAFTAR (Array)
+    }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        alert('Laporan Berhasil Terkirim!');
+        // Reset keranjang setelah sukses
+        products.forEach((p) => (p.quantity = 0));
+        renderProducts();
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      alert('Gagal kirim, cek koneksi internet!');
+    });
+}
+
+// Inisialisasi awal
 renderProducts();
-tg.ready();
