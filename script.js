@@ -164,7 +164,11 @@ window.kirimLaporan = () => {
       const fixedPrice = p.sizePrices[p.selectedSize];
 
       return {
-        nama_produk: p.name,
+        // INI KUNCINYA: Kirim ID-nya (kasual_tassel) buat dicari Modul 4
+        nama_produk: p.id,
+
+        // Kirim info lainnya buat pelengkap
+        nama_asli: p.name,
         ukuran: p.selectedSize,
         warna: p.selectedColor,
         jahitan: p.selectedStitching,
