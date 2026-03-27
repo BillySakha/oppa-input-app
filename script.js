@@ -161,22 +161,28 @@ window.kirimLaporan = () => {
   const itemsToSubmit = products
     .filter((p) => p.quantity > 0)
     .map((p) => {
-      // Ambil harga sesuai ukuran yang dipilih
+      // 1. Ambil harga sesuai ukuran yang dipilih (38-45)
       const fixedPrice = p.sizePrices[p.selectedSize];
 
-      return {
-        // INI YANG DI CARI MODUL 4: Harus ID (contoh: kasual_tassel)
-        // .trim() buat ilangin spasi gak sengaja, .toLowerCase() biar aman
-        nama_produk: p.id.trim().toLowerCase(),
+      // 2. Hitung Omzet (Harga x Jumlah)
+      const hitungOmzet = p.quantity * fixedPrice;
 
-        // Info tambahan buat di Google Sheets
+      return {
+        nama_produk: p.id.trim().toLowerCase(), // ID buat nyari di Master
         nama_asli: p.name,
         ukuran: p.selectedSize,
         warna: p.selectedColor,
         jahitan: p.selectedStitching,
+
+        // Jumlah: Jadi negatif kalau MODE RETUR
         jumlah: isReturMode ? p.quantity * -1 : p.quantity,
-        harga: fixedPrice,
-        total: isReturMode ? p.quantity * fixedPrice * -1 : p.quantity * fixedPrice,
+
+        harga_satuan: fixedPrice,
+
+        // INI VARIABEL OMZET KOTOR (Untuk Kolom G)
+        // Kalau RETUR, angkanya otomatis jadi MINUS
+        omzet_kotor: isReturMode ? hitungOmzet * -1 : hitungOmzet,
+
         status: isReturMode ? 'RETUR' : 'Sukses',
       };
     });
