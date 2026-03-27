@@ -90,7 +90,7 @@ window.kirimLaporan = () => {
   // 1. AMBIL CHAT ID DARI SISTEM TELEGRAM
   // Kita ambil otomatis dari WebApp, kalau gak ada kita kasih default ID lu
   const tg = window.Telegram.WebApp;
-  const userChatId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : '6296544837';
+  const userChatId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : '7610888727';
 
   // Ambil cuma barang yang jumlahnya lebih dari 0
   const itemsToSubmit = products
