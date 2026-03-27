@@ -25,7 +25,6 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .badge {
@@ -37,58 +36,58 @@ body {
   font-weight: 700;
 }
 
-.btn-mode {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 10px;
-  background: #34c759;
-  color: white;
-  font-weight: 700;
-  margin-bottom: 10px;
+/* --- SEARCH & MODE --- */
+.search-bar {
+  margin: 10px 0;
 }
-
 .search-bar input {
   width: 100%;
-  padding: 12px;
+  padding: 10px;
   border-radius: 10px;
   border: 1px solid #eee;
   background: #f1f1f4;
 }
-
-/* --- CONTAINER (LIST VIEW) --- */
-.container {
-  padding: 15px;
+.btn-mode {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background: #34c759;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
-/* KUNCI: Paksa jadi List ke bawah, bukan Grid kotak-kotak */
-#product-list.product-grid {
+/* --- CONTAINER PRODUK (LIST VIEW) --- */
+.product-grid {
   display: flex !important;
-  flex-direction: column !important;
-  gap: 12px !important;
+  flex-direction: column !important; /* Paksa baris ke bawah */
+  gap: 10px !important;
+  padding: 15px !important;
 }
 
-/* --- KARTU PRODUK (HORIZONTAL SEPERTI FOTO WA) --- */
+/* --- KARTU PRODUK (HORIZONTAL) --- */
 .product-card {
   background: white !important;
-  border-radius: 18px !important;
-  padding: 12px !important;
-  display: flex !important; /* Biar konten sejajar ke samping */
-  flex-direction: row !important; /* Image kiri, Teks kanan */
+  border-radius: 15px !important;
+  padding: 10px !important;
+  display: flex !important; /* Gambar Kiri, Info Kanan */
+  flex-direction: row !important;
   align-items: center !important;
   gap: 15px !important;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
 }
 
-/* --- KUNCI MATI UKURAN GAMBAR --- */
+/* --- KUNCI MATI GAMBAR (BIAR GAK ZOOM) --- */
 .product-card img {
-  width: 90px !important; /* Lebar kecil seperti di foto WA */
-  height: 90px !important; /* Tinggi sama biar kotak */
-  min-width: 90px !important;
-  object-fit: contain !important; /* Biar gambar gak kepotong/zoom */
-  border-radius: 12px !important;
+  width: 80px !important; /* UKURAN KECIL */
+  height: 80px !important; /* UKURAN KECIL */
+  min-width: 80px !important; /* Jangan biarkan mengecil lagi */
+  max-width: 80px !important; /* Jangan biarkan membesar */
+  object-fit: contain !important; /* Biar sepatu kelihatan utuh, gak kepotong */
   background: #f8f8f8 !important;
-  flex-shrink: 0 !important; /* Gambar gak boleh kegencet */
+  border-radius: 10px !important;
+  flex-shrink: 0 !important; /* Cegah gambar kegencet teks */
 }
 
 /* --- INFO PRODUK --- */
@@ -96,43 +95,33 @@ body {
   font-size: 14px !important;
   font-weight: 700 !important;
   color: #1c1c1e !important;
-  margin-bottom: 4px !important;
-  text-align: left !important;
+  margin-bottom: 3px !important;
 }
 
 .product-card p {
+  font-size: 13px !important;
   color: #007aff !important;
   font-weight: 800 !important;
-  font-size: 14px !important;
   margin-bottom: 8px !important;
-  text-align: left !important;
 }
 
-/* --- CONTROLS --- */
+/* --- KONTROL JUMLAH --- */
 .qty-control {
   display: flex !important;
   align-items: center !important;
   gap: 12px !important;
-  background: #f2f2f7 !important;
-  padding: 4px !important;
-  border-radius: 8px !important;
-  width: fit-content !important;
 }
-
 .qty-control button {
-  width: 28px !important;
-  height: 28px !important;
-  border: none !important;
-  background: white !important;
-  border-radius: 6px !important;
-  font-weight: bold !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: #f2f2f7;
+  border-radius: 6px;
+  font-weight: bold;
 }
-
 .qty-control span {
-  font-weight: 700 !important;
-  min-width: 20px !important;
-  text-align: center !important;
+  font-weight: 700;
+  min-width: 15px;
 }
 
 /* --- FOOTER --- */
@@ -140,11 +129,9 @@ body {
   position: fixed;
   bottom: 0;
   width: 100%;
-  padding: 15px;
+  padding: 20px;
   background: white;
-  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
 }
-
 .btn-primary {
   width: 100%;
   padding: 15px;
@@ -153,5 +140,4 @@ body {
   border: none;
   border-radius: 12px;
   font-weight: bold;
-  font-size: 16px;
 }
