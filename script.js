@@ -87,6 +87,11 @@ function updateBadge() {
 
 /* --- 7. KIRIM LAPORAN KE MAKE.COM (ARRAY FORMAT) --- */
 window.kirimLaporan = () => {
+  // 1. AMBIL CHAT ID DARI SISTEM TELEGRAM
+  // Kita ambil otomatis dari WebApp, kalau gak ada kita kasih default ID lu
+  const tg = window.Telegram.WebApp;
+  const userChatId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : '6296544837';
+
   // Ambil cuma barang yang jumlahnya lebih dari 0
   const itemsToSubmit = products
     .filter((p) => p.quantity > 0)
@@ -116,6 +121,7 @@ window.kirimLaporan = () => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       user: 'Tian',
+      chatId: userChatId,
       items: itemsToSubmit, // INI YANG BAKAL DIBACA ITERATOR
     }),
   })
