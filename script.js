@@ -7,7 +7,7 @@ let products = [
   { id: 5, name: 'kasual_wing_shiny', price: 370000, image: 'img/kasual_wing_shiny.jpg', quantity: 0 },
   { id: 6, name: 'penny_loaf', price: 360000, image: 'img/penny_loaf.jpg', quantity: 0 },
   { id: 7, name: 'docmart_utip', price: 430000, image: 'img/docmart_utip.jpg', quantity: 0 },
-  { id: 8, name: 'lofers_tassel', price: 390000, image: 'img/lofers_tassel.jpg', quantity: 0 },
+  { id: 8, name: 'lofers_tassel', price: 390000, image: 'img/loafers_tassel.jpg', quantity: 0 },
   { id: 9, name: 'docmart_polos', price: 410000, image: 'img/docmart_polos.jpg', quantity: 0 },
 ];
 
