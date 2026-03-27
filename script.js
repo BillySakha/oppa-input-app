@@ -73,36 +73,36 @@ function renderProducts() {
       .join('');
 
     container.innerHTML += `
-      <div class="product-card ${isReturMode ? 'retur-style' : ''}">
-        <div class="product-header">
-          <img src="${p.image}" class="product-img" alt="${p.name}">
-          <div class="product-info">
-            <h3>${p.name.replace(/_/g, ' ')}</h3>
-            <p class="price-display">Rp ${currentPrice.toLocaleString('id-ID')}</p>
-          </div>
-        </div>
-
-        <div class="product-variants">
-          <label>Pilih Ukuran:</label>
-          <div class="size-container">${sizesHtml}</div>
-
-          <label>Warna:</label>
-          <div class="size-container">${colorsHtml}</div>
-
-          <label>Jahitan Outsole:</label>
-          <div class="size-container">${stitchingHtml}</div>
-        </div>
-
-        <div class="qty-section">
-          <span>Jumlah:</span>
-          <div class="qty-control">
-            <button onclick="updateQty('${p.id}', -1)">-</button>
-            <span class="qty-number">${p.quantity}</span>
-            <button onclick="updateQty('${p.id}', 1)">+</button>
-          </div>
-        </div>
+  <div class="product-card">
+    <div class="product-header">
+      <img src="${p.image}" class="product-img" alt="${p.name}">
+      <div class="product-info">
+        <h3>${p.name.replace(/_/g, ' ')}</h3>
+        <p class="price-display">Rp ${currentPrice.toLocaleString('id-ID')}</p>
       </div>
-    `;
+    </div>
+
+    <div class="product-variants">
+      <label class="variant-label">Pilih Ukuran</label>
+      <div class="size-container">${sizesHtml}</div>
+
+      <label class="variant-label">Pilih Warna</label>
+      <div class="size-container">${colorsHtml}</div>
+
+      <label class="variant-label">Jahitan Outsole</label>
+      <div class="size-container">${stitchingHtml}</div>
+    </div>
+
+    <div class="qty-section">
+      <span>Jumlah Item</span>
+      <div class="qty-control">
+        <button onclick="updateQty('${p.id}', -1)">-</button>
+        <span class="qty-number">${p.quantity}</span>
+        <button onclick="updateQty('${p.id}', 1)">+</button>
+      </div>
+    </div>
+  </div>
+`;
   });
 
   updateBadge();
