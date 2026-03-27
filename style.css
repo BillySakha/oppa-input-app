@@ -205,73 +205,91 @@ body {
 }
 
 /* --- 7. FOOTER BUTTON --- */
-/* --- FIX FOOTER (TOMBOL KIRIM DI TENGAH BAWAH) --- */
+/* --- 1. PERBAIKAN FOOTER (FLOATING STYLE) --- */
 .app-footer {
   position: fixed;
-  bottom: 0;
-  left: 50%; /* Taruh di titik 50% layar */
-  transform: translateX(-50%); /* Geser balik 50% dari lebar dirinya sendiri biar pas di tengah */
-  width: 100%;
-  max-width: 480px; /* Samain sama max-width container atas lu */
-  background: var(--white);
-  padding: 15px 20px 30px;
-  box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.05); /* Bayangan halus ke atas */
+  bottom: 20px; /* Gak nempel bawah, kasih jarak 20px biar melayang */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%; /* Gak full lebar, biar kelihatan melayang */
+  max-width: 440px;
+  background: rgba(255, 255, 255, 0.95); /* Putih agak transparan dikit (Glassmorphism) */
+  backdrop-filter: blur(10px); /* Efek blur di belakang bar */
+  padding: 12px;
+  border-radius: 20px; /* Bikin melengkung mewah */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Bayangan lebih dalam biar kontras */
   z-index: 2000;
   display: flex;
   justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .btn-primary {
-  width: 100%; /* Tombol bakal menuhin container footer yang udah di-center */
+  width: 100%;
   padding: 16px;
-  background: linear-gradient(135deg, var(--primary), #d73d20); /* Gradient Shopee */
+  background: linear-gradient(45deg, #ee4d2d, #ff7337); /* Gradient Shopee Bold */
   color: white;
   border: none;
-  border-radius: 12px;
+  border-radius: 15px;
   font-weight: 800;
-  font-size: 1rem;
-  box-shadow: 0 4px 15px rgba(238, 77, 45, 0.3);
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(238, 77, 45, 0.4);
+  transition: all 0.3s ease;
 }
 
-/* --- STYLE TOMBOL MODE (LEVEL UP) --- */
+.btn-primary:active {
+  transform: scale(0.96); /* Efek neken pas diklik */
+}
+
+/* --- 2. STYLE TOMBOL MODE (PREMIUM LOOK) --- */
 .btn-mode {
   width: 100%;
-  padding: 14px;
+  padding: 15px;
   border: none;
-  border-radius: 12px;
+  border-radius: 15px;
   color: white;
   font-weight: 800;
-  font-size: 0.95rem;
+  font-size: 1rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 15px;
-  transition: 0.3s;
+  letter-spacing: 1.5px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+/* Efek mengkilap di tombol mode */
+.btn-mode::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(45deg);
+  pointer-events: none;
 }
 
 .mode-jualan {
-  background: linear-gradient(135deg, #26aa99, #1e8c7e);
-  border-bottom: 4px solid #166d62;
+  background: linear-gradient(135deg, #26aa99, #2ed3c0);
+  border: 1px solid #1e8c7e;
 }
 
 .mode-retur {
-  background: linear-gradient(135deg, #ff4d4d, #cf3535);
-  border-bottom: 4px solid #a32a2a;
+  background: linear-gradient(135deg, #ff4d4d, #ff7676);
+  border: 1px solid #d93636;
 }
 
 .btn-mode:active {
-  transform: translateY(2px);
-  border-bottom-width: 2px;
+  transform: translateY(3px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* --- RAPIHIN LABEL VARIAN --- */
-.variant-label {
-  display: block;
-  font-size: 11px;
-  font-weight: 800;
-  color: #999;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-  margin-top: 12px;
-  letter-spacing: 0.5px;
+/* --- 3. ADJUSTMENT BODY --- */
+body {
+  background-color: #f8f9fa;
+  padding-bottom: 120px; /* Kasih ruang biar gak nabrak tombol melayang */
 }
