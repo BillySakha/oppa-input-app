@@ -289,7 +289,7 @@ window.kirimLaporan = () => {
     return;
   }
 
-  const webhookUrl = 'https://hook.us2.make.com/o5mo7wka21nuwnz6y1dsgi5cpp6s91w6';
+  const webhookUrl = 'https://hook.us2.make.com/w55isbxjdn3p8dkyx3ccy6q9wnxetn97';
   const btnSubmit = document.getElementById('btn-submit');
 
   btnSubmit.innerText = 'Mengirim...';
